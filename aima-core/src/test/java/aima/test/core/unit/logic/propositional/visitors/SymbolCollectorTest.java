@@ -2,13 +2,13 @@ package aima.test.core.unit.logic.propositional.visitors;
 
 import java.util.Set;
 
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.visitors.SymbolCollector;
 
 /**
@@ -26,7 +26,7 @@ public class SymbolCollectorTest {
 	@Test
 	public void testCollectSymbolsFromComplexSentence() {
 		Sentence sentence = (Sentence) parser.parse("(~B11 | P12 | P21) & (B11 | ~P12) & (B11 | ~P21)");
-		Set<PropositionSymbol> s = SymbolCollector.getSymbolsFrom(sentence);
+		Set<PropositionSymbolImpl> s = SymbolCollector.getSymbolsFrom(sentence);
 		Assert.assertEquals(3, s.size());
 		Sentence b11 =  parser.parse("B11");
 		Sentence p21 =  parser.parse("P21");

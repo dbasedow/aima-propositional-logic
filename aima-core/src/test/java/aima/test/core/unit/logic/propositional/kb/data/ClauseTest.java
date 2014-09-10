@@ -2,12 +2,12 @@ package aima.test.core.unit.logic.propositional.kb.data;
 
 import java.util.HashSet;
 
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import org.junit.Assert;
 import org.junit.Test;
 
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.kb.data.Literal;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.util.Util;
 
 /**
@@ -17,11 +17,11 @@ import aima.core.util.Util;
  */
 public class ClauseTest {
 
-	private final Literal LITERAL_P     = new Literal(new PropositionSymbol("P"));
-	private final Literal LITERAL_NOT_P = new Literal(new PropositionSymbol("P"), false);
-	private final Literal LITERAL_Q     = new Literal(new PropositionSymbol("Q"));
-	private final Literal LITERAL_NOT_Q = new Literal(new PropositionSymbol("Q"), false);
-	private final Literal LITERAL_R     = new Literal(new PropositionSymbol("R"));
+	private final Literal LITERAL_P     = new Literal(new PropositionSymbolImpl("P"));
+	private final Literal LITERAL_NOT_P = new Literal(new PropositionSymbolImpl("P"), false);
+	private final Literal LITERAL_Q     = new Literal(new PropositionSymbolImpl("Q"));
+	private final Literal LITERAL_NOT_Q = new Literal(new PropositionSymbolImpl("Q"), false);
+	private final Literal LITERAL_R     = new Literal(new PropositionSymbolImpl("R"));
 	
 	@Test
 	public void testAlwaysFalseLiteralsExcludedOnConstruction() {
@@ -31,21 +31,21 @@ public class ClauseTest {
 		clause = new Clause(LITERAL_P);
 		Assert.assertEquals(1, clause.getNumberLiterals());
 		
-		clause = new Clause(LITERAL_P, new Literal(PropositionSymbol.FALSE));
+		clause = new Clause(LITERAL_P, new Literal(PropositionSymbolImpl.FALSE));
 		Assert.assertEquals(1, clause.getNumberLiterals());
 		Assert.assertEquals(Util.createSet(LITERAL_P), clause.getLiterals());
 		
-		clause = new Clause(LITERAL_P, new Literal(PropositionSymbol.TRUE, false));
+		clause = new Clause(LITERAL_P, new Literal(PropositionSymbolImpl.TRUE, false));
 		Assert.assertEquals(1, clause.getNumberLiterals());
 		Assert.assertEquals(Util.createSet(LITERAL_P), clause.getLiterals());
 		
-		clause = new Clause(LITERAL_P, new Literal(PropositionSymbol.FALSE, false));
+		clause = new Clause(LITERAL_P, new Literal(PropositionSymbolImpl.FALSE, false));
 		Assert.assertEquals(2, clause.getNumberLiterals());
-		Assert.assertEquals(Util.createSet(LITERAL_P, new Literal(PropositionSymbol.FALSE, false)), clause.getLiterals());
+		Assert.assertEquals(Util.createSet(LITERAL_P, new Literal(PropositionSymbolImpl.FALSE, false)), clause.getLiterals());
 		
-		clause = new Clause(LITERAL_P, new Literal(PropositionSymbol.TRUE));
+		clause = new Clause(LITERAL_P, new Literal(PropositionSymbolImpl.TRUE));
 		Assert.assertEquals(2, clause.getNumberLiterals());
-		Assert.assertEquals(Util.createSet(LITERAL_P, new Literal(PropositionSymbol.TRUE)), clause.getLiterals());
+		Assert.assertEquals(Util.createSet(LITERAL_P, new Literal(PropositionSymbolImpl.TRUE)), clause.getLiterals());
 	}
 	
 	@Test
@@ -176,16 +176,16 @@ public class ClauseTest {
 		clause = new Clause(LITERAL_NOT_P);
 		Assert.assertFalse(clause.isTautology());
 		
-		clause = new Clause(LITERAL_P, new Literal(PropositionSymbol.TRUE), LITERAL_R);
+		clause = new Clause(LITERAL_P, new Literal(PropositionSymbolImpl.TRUE), LITERAL_R);
 		Assert.assertTrue(clause.isTautology());
 		
-		clause = new Clause(LITERAL_P, new Literal(PropositionSymbol.FALSE, false), LITERAL_R);
+		clause = new Clause(LITERAL_P, new Literal(PropositionSymbolImpl.FALSE, false), LITERAL_R);
 		Assert.assertTrue(clause.isTautology());
 		
-		clause = new Clause(LITERAL_P, new Literal(PropositionSymbol.TRUE, false), LITERAL_R);
+		clause = new Clause(LITERAL_P, new Literal(PropositionSymbolImpl.TRUE, false), LITERAL_R);
 		Assert.assertFalse(clause.isTautology());
 		
-		clause = new Clause(LITERAL_P, new Literal(PropositionSymbol.FALSE), LITERAL_R);
+		clause = new Clause(LITERAL_P, new Literal(PropositionSymbolImpl.FALSE), LITERAL_R);
 		Assert.assertFalse(clause.isTautology());
 		
 		clause = new Clause(LITERAL_P, LITERAL_Q, LITERAL_R, LITERAL_NOT_Q);
@@ -203,16 +203,16 @@ public class ClauseTest {
 		clause = new Clause(LITERAL_P);
 		Assert.assertEquals(1, clause.getNumberLiterals());
 		
-		clause = new Clause(LITERAL_P, new Literal(PropositionSymbol.FALSE));
+		clause = new Clause(LITERAL_P, new Literal(PropositionSymbolImpl.FALSE));
 		Assert.assertEquals(1, clause.getNumberLiterals());
 		
-		clause = new Clause(LITERAL_P, new Literal(PropositionSymbol.TRUE, false));
+		clause = new Clause(LITERAL_P, new Literal(PropositionSymbolImpl.TRUE, false));
 		Assert.assertEquals(1, clause.getNumberLiterals());
 		
-		clause = new Clause(LITERAL_P, new Literal(PropositionSymbol.FALSE, false));
+		clause = new Clause(LITERAL_P, new Literal(PropositionSymbolImpl.FALSE, false));
 		Assert.assertEquals(2, clause.getNumberLiterals());
 		
-		clause = new Clause(LITERAL_P, new Literal(PropositionSymbol.TRUE));
+		clause = new Clause(LITERAL_P, new Literal(PropositionSymbolImpl.TRUE));
 		Assert.assertEquals(2, clause.getNumberLiterals());
 
 		clause = new Clause(LITERAL_P, LITERAL_P);
@@ -279,25 +279,25 @@ public class ClauseTest {
 	@Test
 	public void testGetPositiveSymbols() {
 		Clause clause = new Clause();
-		Assert.assertEquals(new HashSet<PropositionSymbol>(), clause.getPositiveSymbols());
+		Assert.assertEquals(new HashSet<PropositionSymbolImpl>(), clause.getPositiveSymbols());
 		
 		clause = new Clause(LITERAL_P);
-		Assert.assertEquals(Util.createSet(new PropositionSymbol("P")), clause.getPositiveSymbols());
+		Assert.assertEquals(Util.createSet(new PropositionSymbolImpl("P")), clause.getPositiveSymbols());
 
 		clause = new Clause(LITERAL_P, LITERAL_NOT_Q, LITERAL_R);
-		Assert.assertEquals(Util.createSet(new PropositionSymbol("P"), new PropositionSymbol("R")), clause.getPositiveSymbols());
+		Assert.assertEquals(Util.createSet(new PropositionSymbolImpl("P"), new PropositionSymbolImpl("R")), clause.getPositiveSymbols());
 	}
 	
 	@Test
 	public void testGetNegativeSymbols() {
 		Clause clause = new Clause();
-		Assert.assertEquals(new HashSet<PropositionSymbol>(), clause.getNegativeSymbols());
+		Assert.assertEquals(new HashSet<PropositionSymbolImpl>(), clause.getNegativeSymbols());
 		
 		clause = new Clause(LITERAL_NOT_P);
-		Assert.assertEquals(Util.createSet(new PropositionSymbol("P")), clause.getNegativeSymbols());
+		Assert.assertEquals(Util.createSet(new PropositionSymbolImpl("P")), clause.getNegativeSymbols());
 
 		clause = new Clause(LITERAL_NOT_P, LITERAL_NOT_Q, LITERAL_R);
-		Assert.assertEquals(Util.createSet(new PropositionSymbol("P"), new PropositionSymbol("Q")), clause.getNegativeSymbols());
+		Assert.assertEquals(Util.createSet(new PropositionSymbolImpl("P"), new PropositionSymbolImpl("Q")), clause.getNegativeSymbols());
 	}
 	
 	@Test
@@ -381,12 +381,12 @@ public class ClauseTest {
 	@Test(expected=UnsupportedOperationException.class)
 	public void testPostivieSymbolsImmutable() {
 		Clause clause = new Clause(LITERAL_P);
-		clause.getPositiveSymbols().add(new PropositionSymbol("Q"));
+		clause.getPositiveSymbols().add(new PropositionSymbolImpl("Q"));
 	}
 	
 	@Test(expected=UnsupportedOperationException.class)
 	public void testNegativeSymbolsImmutable() {
 		Clause clause = new Clause(LITERAL_P);
-		clause.getNegativeSymbols().add(new PropositionSymbol("Q"));
+		clause.getNegativeSymbols().add(new PropositionSymbolImpl("Q"));
 	}
 }

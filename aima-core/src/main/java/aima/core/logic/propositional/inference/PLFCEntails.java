@@ -7,7 +7,7 @@ import java.util.Set;
 
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Clause;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.logic.propositional.visitors.SymbolCollector;
 import aima.core.util.datastructure.FIFOQueue;
@@ -69,24 +69,24 @@ public class PLFCEntails {
 	 * @throws IllegalArgumentException
 	 *             if KB contains any non-definite clauses.
 	 */
-	public boolean plfcEntails(KnowledgeBase kb, PropositionSymbol q) {
+	public boolean plfcEntails(KnowledgeBase kb, PropositionSymbolImpl q) {
 		// count <- a table, where count[c] is the number of symbols in c's
 		// premise
 		Map<Clause, Integer> count = initializeCount(kb);
 		// inferred <- a table, where inferred[s] is initially false for all
 		// symbols
-		Map<PropositionSymbol, Boolean> inferred = initializeInferred(kb);
+		Map<PropositionSymbolImpl, Boolean> inferred = initializeInferred(kb);
 		// agenda <- a queue of symbols, initially symbols known to be true in
 		// KB
-		Queue<PropositionSymbol> agenda = initializeAgenda(count);
+		Queue<PropositionSymbolImpl> agenda = initializeAgenda(count);
 		// Note: an index for p to the clauses where p appears in the premise
-		Map<PropositionSymbol, Set<Clause>> pToClausesWithPInPremise = initializeIndex(
+		Map<PropositionSymbolImpl, Set<Clause>> pToClausesWithPInPremise = initializeIndex(
 				count, inferred);
 
 		// while agenda is not empty do
 		while (!agenda.isEmpty()) {
 			// p <- Pop(agenda)
-			PropositionSymbol p = agenda.pop();
+			PropositionSymbolImpl p = agenda.pop();
 			// if p = q then return true
 			if (p.equals(q)) {
 				return true;
@@ -138,11 +138,11 @@ public class PLFCEntails {
 		return count;
 	}
 
-	protected Map<PropositionSymbol, Boolean> initializeInferred(KnowledgeBase kb) {
+	protected Map<PropositionSymbolImpl, Boolean> initializeInferred(KnowledgeBase kb) {
 		// inferred <- a table, where inferred[s] is initially false for all
 		// symbols
-		Map<PropositionSymbol, Boolean> inferred = new HashMap<PropositionSymbol, Boolean>();
-		for (PropositionSymbol p : SymbolCollector.getSymbolsFrom(kb
+		Map<PropositionSymbolImpl, Boolean> inferred = new HashMap<PropositionSymbolImpl, Boolean>();
+		for (PropositionSymbolImpl p : SymbolCollector.getSymbolsFrom(kb
 				.asSentence())) {
 			inferred.put(p, false);
 		}
@@ -151,10 +151,10 @@ public class PLFCEntails {
 
 	// Note: at the point of calling this routine, count will contain all the
 	// clauses in KB.
-	protected Queue<PropositionSymbol> initializeAgenda(Map<Clause, Integer> count) {
+	protected Queue<PropositionSymbolImpl> initializeAgenda(Map<Clause, Integer> count) {
 		// agenda <- a queue of symbols, initially symbols known to be true in
 		// KB
-		Queue<PropositionSymbol> agenda = new FIFOQueue<PropositionSymbol>();
+		Queue<PropositionSymbolImpl> agenda = new FIFOQueue<PropositionSymbolImpl>();
 		for (Clause c : count.keySet()) {
 			// No premise just a conclusion, then we know its true
 			if (c.getNumberNegativeLiterals() == 0) {
@@ -166,10 +166,10 @@ public class PLFCEntails {
 
 	// Note: at the point of calling this routine, count will contain all the
 	// clauses in KB while inferred will contain all the proposition symbols.
-	protected Map<PropositionSymbol, Set<Clause>> initializeIndex(
-			Map<Clause, Integer> count, Map<PropositionSymbol, Boolean> inferred) {
-		Map<PropositionSymbol, Set<Clause>> pToClausesWithPInPremise = new HashMap<PropositionSymbol, Set<Clause>>();
-		for (PropositionSymbol p : inferred.keySet()) {
+	protected Map<PropositionSymbolImpl, Set<Clause>> initializeIndex(
+			Map<Clause, Integer> count, Map<PropositionSymbolImpl, Boolean> inferred) {
+		Map<PropositionSymbolImpl, Set<Clause>> pToClausesWithPInPremise = new HashMap<PropositionSymbolImpl, Set<Clause>>();
+		for (PropositionSymbolImpl p : inferred.keySet()) {
 			Set<Clause> clausesWithPInPremise = new HashSet<Clause>();
 			for (Clause c : count.keySet()) {
 				// Note: The negative symbols comprise the premise
@@ -190,7 +190,7 @@ public class PLFCEntails {
 		count.put(c, currentCount - 1);
 	}
 
-	protected PropositionSymbol conclusion(Clause c) {
+	protected PropositionSymbolImpl conclusion(Clause c) {
 		// Note: the conclusion is from the single positive
 		// literal in the definite clause (which we are
 		// restricted to).

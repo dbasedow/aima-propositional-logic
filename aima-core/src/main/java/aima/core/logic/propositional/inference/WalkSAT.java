@@ -10,7 +10,7 @@ import java.util.Set;
 
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.kb.data.Model;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import aima.core.util.SetOps;
 
 /**
@@ -121,15 +121,15 @@ public class WalkSAT {
 	
 	protected Model randomAssignmentToSymbolsInClauses(Set<Clause> clauses) {
 		// Collect the symbols in clauses
-		Set<PropositionSymbol> symbols = new LinkedHashSet<PropositionSymbol>();
+		Set<PropositionSymbolImpl> symbols = new LinkedHashSet<PropositionSymbolImpl>();
 		for (Clause c : clauses) {
 			symbols.addAll(c.getPositiveSymbols());
 			symbols.addAll(c.getNegativeSymbols());
 		}
 
 		// Make initial set of assignments
-		Map<PropositionSymbol, Boolean> values = new HashMap<PropositionSymbol, Boolean>();
-		for (PropositionSymbol symbol : symbols) {
+		Map<PropositionSymbolImpl, Boolean> values = new HashMap<PropositionSymbolImpl, Boolean>();
+		for (PropositionSymbolImpl symbol : symbols) {
 			// a random assignment of true/false to the symbols in clauses
 			values.put(symbol, random.nextBoolean());
 		}
@@ -153,13 +153,13 @@ public class WalkSAT {
 		return result;
 	}
 
-	protected PropositionSymbol randomlySelectSymbolFromClause(Clause clause) {
+	protected PropositionSymbolImpl randomlySelectSymbolFromClause(Clause clause) {
 		// all the symbols in clause
-		Set<PropositionSymbol> symbols = SetOps.union(
+		Set<PropositionSymbolImpl> symbols = SetOps.union(
 				clause.getPositiveSymbols(), clause.getNegativeSymbols());
 
 		// a randomly selected symbol from clause
-		PropositionSymbol result = (new ArrayList<PropositionSymbol>(symbols))
+		PropositionSymbolImpl result = (new ArrayList<PropositionSymbolImpl>(symbols))
 				.get(random.nextInt(symbols.size()));
 		return result;
 	}
@@ -169,10 +169,10 @@ public class WalkSAT {
 		Model result = model;
 
 		// all the symbols in clause
-		Set<PropositionSymbol> symbols = SetOps.union(
+		Set<PropositionSymbolImpl> symbols = SetOps.union(
 				clause.getPositiveSymbols(), clause.getNegativeSymbols());
 		int maxClausesSatisfied = -1;
-		for (PropositionSymbol symbol : symbols) {
+		for (PropositionSymbolImpl symbol : symbols) {
 			Model flippedModel = result.flip(symbol);
 			int numberClausesSatisfied = 0;
 			for (Clause c : clauses) {

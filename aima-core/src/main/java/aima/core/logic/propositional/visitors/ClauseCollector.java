@@ -8,7 +8,7 @@ import java.util.Set;
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.kb.data.Literal;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 
 /**
@@ -40,7 +40,7 @@ public class ClauseCollector extends BasicGatherer<Clause> {
 	}
 	
 	@Override
-	public Set<Clause> visitPropositionSymbol(PropositionSymbol s, Set<Clause> arg) {
+	public Set<Clause> visitPropositionSymbol(PropositionSymbolImpl s, Set<Clause> arg) {
 		// a positive unit clause
 		Literal positiveLiteral = new Literal(s);
 		arg.add(new Clause(positiveLiteral));
@@ -56,7 +56,7 @@ public class ClauseCollector extends BasicGatherer<Clause> {
 		}
 		
 		// a negative unit clause
-		Literal negativeLiteral = new Literal((PropositionSymbol)s.getSimplerSentence(0), false);
+		Literal negativeLiteral = new Literal((PropositionSymbolImpl)s.getSimplerSentence(0), false);
 		arg.add(new Clause(negativeLiteral));
 		
 		return arg;
@@ -93,7 +93,7 @@ public class ClauseCollector extends BasicGatherer<Clause> {
 		}
 		
 		@Override
-		public Set<Literal> visitPropositionSymbol(PropositionSymbol s, Set<Literal> arg) {
+		public Set<Literal> visitPropositionSymbol(PropositionSymbolImpl s, Set<Literal> arg) {
 			// a positive literal
 			Literal positiveLiteral = new Literal(s);
 			arg.add(positiveLiteral);
@@ -109,7 +109,7 @@ public class ClauseCollector extends BasicGatherer<Clause> {
 			}
 			
 			// a negative literal
-			Literal negativeLiteral = new Literal((PropositionSymbol)s.getSimplerSentence(0), false);
+			Literal negativeLiteral = new Literal((PropositionSymbolImpl)s.getSimplerSentence(0), false);
 
 			arg.add(negativeLiteral);
 			

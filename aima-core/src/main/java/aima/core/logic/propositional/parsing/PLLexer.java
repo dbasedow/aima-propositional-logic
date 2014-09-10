@@ -5,7 +5,7 @@ import aima.core.logic.common.LexerException;
 import aima.core.logic.common.LogicTokenTypes;
 import aima.core.logic.common.Token;
 import aima.core.logic.propositional.parsing.ast.Connective;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 
 /**
  * A concrete implementation of a lexical analyzer for the propositional language.
@@ -73,7 +73,7 @@ public class PLLexer extends Lexer {
 	}
 	
 	private boolean symbolDetected(char leadingChar) {
-		return PropositionSymbol.isPropositionSymbolIdentifierStart(leadingChar);
+		return PropositionSymbolImpl.isPropositionSymbolIdentifierStart(leadingChar);
 	}
 	
 	private Token connective() {
@@ -98,16 +98,16 @@ public class PLLexer extends Lexer {
 	private Token symbol() {
 		int startPosition = getCurrentPositionInInput();
 		StringBuffer sbuf = new StringBuffer();
-		while (PropositionSymbol.isPropositionSymbolIdentifierPart(lookAhead(1))) {
+		while (PropositionSymbolImpl.isPropositionSymbolIdentifierPart(lookAhead(1))) {
 			sbuf.append(lookAhead(1));
 			consume();
 		}
 		String symbol = sbuf.toString();
-		if (PropositionSymbol.isAlwaysTrueSymbol(symbol)) {
-			return new Token(LogicTokenTypes.TRUE, PropositionSymbol.TRUE_SYMBOL, startPosition);
-		} else if (PropositionSymbol.isAlwaysFalseSymbol(symbol)) {
-			return new Token(LogicTokenTypes.FALSE, PropositionSymbol.FALSE_SYMBOL, startPosition);
-		} else if (PropositionSymbol.isPropositionSymbol(symbol)){
+		if (PropositionSymbolImpl.isAlwaysTrueSymbol(symbol)) {
+			return new Token(LogicTokenTypes.TRUE, PropositionSymbolImpl.TRUE_SYMBOL, startPosition);
+		} else if (PropositionSymbolImpl.isAlwaysFalseSymbol(symbol)) {
+			return new Token(LogicTokenTypes.FALSE, PropositionSymbolImpl.FALSE_SYMBOL, startPosition);
+		} else if (PropositionSymbolImpl.isPropositionSymbol(symbol)){
 			return new Token(LogicTokenTypes.SYMBOL, sbuf.toString(), startPosition);
 		}
 		

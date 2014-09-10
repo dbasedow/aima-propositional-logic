@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import aima.core.util.SetOps;
 
 /**
@@ -27,8 +27,8 @@ public class Clause {
 	//
 	private Set<Literal> literals = new LinkedHashSet<Literal>();
 	//
-	private Set<PropositionSymbol> cachedPositiveSymbols = new LinkedHashSet<PropositionSymbol>();
-	private Set<PropositionSymbol> cachedNegativeSymbols = new LinkedHashSet<PropositionSymbol>();
+	private Set<PropositionSymbolImpl> cachedPositiveSymbols = new LinkedHashSet<PropositionSymbolImpl>();
+	private Set<PropositionSymbolImpl> cachedNegativeSymbols = new LinkedHashSet<PropositionSymbolImpl>();
 	private String cachedStringRep = null;
 	private int cachedHashCode = -1;
 
@@ -223,7 +223,7 @@ public class Clause {
 	 * 
 	 * @return the set of symbols from the clause's positive literals.
 	 */
-	public Set<PropositionSymbol> getPositiveSymbols() {
+	public Set<PropositionSymbolImpl> getPositiveSymbols() {
 		return cachedPositiveSymbols;
 	}
 
@@ -231,7 +231,7 @@ public class Clause {
 	 * 
 	 * @return the set of symbols from the clause's negative literals.
 	 */
-	public Set<PropositionSymbol> getNegativeSymbols() {
+	public Set<PropositionSymbolImpl> getNegativeSymbols() {
 		return cachedNegativeSymbols;
 	}
 

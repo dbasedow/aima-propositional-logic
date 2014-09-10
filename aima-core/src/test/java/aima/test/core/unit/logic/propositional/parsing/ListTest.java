@@ -3,10 +3,9 @@ package aima.test.core.unit.logic.propositional.parsing;
 import java.util.ArrayList;
 import java.util.List;
 
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import org.junit.Assert;
 import org.junit.Test;
-
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * @author Ravi Mohan
@@ -16,12 +15,12 @@ public class ListTest {
 
 	@Test
 	public void testListOfSymbolsClone() {
-		ArrayList<PropositionSymbol> l = new ArrayList<PropositionSymbol>();
-		l.add(new PropositionSymbol("A"));
-		l.add(new PropositionSymbol("B"));
-		l.add(new PropositionSymbol("C"));
-		List<PropositionSymbol> l2 = new ArrayList<PropositionSymbol>(l);
-		l2.remove(new PropositionSymbol("B"));
+		ArrayList<PropositionSymbolImpl> l = new ArrayList<PropositionSymbolImpl>();
+		l.add(new PropositionSymbolImpl("A"));
+		l.add(new PropositionSymbolImpl("B"));
+		l.add(new PropositionSymbolImpl("C"));
+		List<PropositionSymbolImpl> l2 = new ArrayList<PropositionSymbolImpl>(l);
+		l2.remove(new PropositionSymbolImpl("B"));
 		Assert.assertEquals(3, l.size());
 		Assert.assertEquals(2, l2.size());
 	}

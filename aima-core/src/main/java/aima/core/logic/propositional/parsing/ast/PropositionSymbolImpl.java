@@ -20,12 +20,12 @@ import javax.lang.model.SourceVersion;
  * 
  * @see javax.lang.model.SourceVersion#isIdentifier(CharSequence)
  */
-public class PropositionSymbol extends AtomicSentence {
+public class PropositionSymbolImpl extends AtomicSentence {
 	//
 	public static final String TRUE_SYMBOL = "True";
 	public static final String FALSE_SYMBOL = "False";
-	public static final PropositionSymbol TRUE = new PropositionSymbol(TRUE_SYMBOL);
-	public static final PropositionSymbol FALSE = new PropositionSymbol(FALSE_SYMBOL);
+	public static final PropositionSymbolImpl TRUE = new PropositionSymbolImpl(TRUE_SYMBOL);
+	public static final PropositionSymbolImpl FALSE = new PropositionSymbolImpl(FALSE_SYMBOL);
 	//
 	private String symbol;
 
@@ -35,7 +35,7 @@ public class PropositionSymbol extends AtomicSentence {
 	 * @param symbol
 	 *            the symbol uniquely identifying the proposition.
 	 */
-	public PropositionSymbol(String symbol) {
+	public PropositionSymbolImpl(String symbol) {
 		// Ensure differing cases for the 'True' and 'False'
 		// propositional constants are represented in a canonical form.
 		if (TRUE_SYMBOL.equalsIgnoreCase(symbol)) {
@@ -140,7 +140,7 @@ public class PropositionSymbol extends AtomicSentence {
 		if ((o == null) || (this.getClass() != o.getClass())) {
 			return false;
 		}
-		PropositionSymbol sym = (PropositionSymbol) o;
+		PropositionSymbolImpl sym = (PropositionSymbolImpl) o;
 		return (sym.getSymbol().equals(getSymbol()));
 
 	}

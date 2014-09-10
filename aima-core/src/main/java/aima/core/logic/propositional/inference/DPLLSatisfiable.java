@@ -11,7 +11,7 @@ import aima.core.logic.propositional.kb.data.Literal;
 import aima.core.logic.propositional.kb.data.Model;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.logic.propositional.visitors.SymbolCollector;
@@ -73,7 +73,7 @@ public class DPLLSatisfiable {
 		Set<Clause> clauses = ConvertToConjunctionOfClauses.convert(s)
 				.getClauses();
 		// symbols <- a list of the proposition symbols in s
-		List<PropositionSymbol> symbols = getPropositionSymbolsInSentence(s);
+		List<PropositionSymbolImpl> symbols = getPropositionSymbolsInSentence(s);
 
 		// return DPLL(clauses, symbols, {})
 		return dpll(clauses, symbols, new Model());
@@ -91,7 +91,7 @@ public class DPLLSatisfiable {
 	 * @return true if the model is satisfiable under current assignments, false
 	 *         otherwise.
 	 */
-	public boolean dpll(Set<Clause> clauses, List<PropositionSymbol> symbols,
+	public boolean dpll(Set<Clause> clauses, List<PropositionSymbolImpl> symbols,
 			Model model) {
 		// if every clause in clauses is true in model then return true
 		if (everyClauseTrue(clauses, model)) {
@@ -103,7 +103,7 @@ public class DPLLSatisfiable {
 		}
 
 		// P, value <- FIND-PURE-SYMBOL(symbols, clauses, model)
-		Pair<PropositionSymbol, Boolean> pAndValue = findPureSymbol(symbols,
+		Pair<PropositionSymbolImpl, Boolean> pAndValue = findPureSymbol(symbols,
 				clauses, model);
 		// if P is non-null then
 		if (pAndValue != null) {
@@ -122,8 +122,8 @@ public class DPLLSatisfiable {
 		}
 
 		// P <- FIRST(symbols); rest <- REST(symbols)
-		PropositionSymbol p = Util.first(symbols);
-		List<PropositionSymbol> rest = Util.rest(symbols);
+		PropositionSymbolImpl p = Util.first(symbols);
+		List<PropositionSymbolImpl> rest = Util.rest(symbols);
 		// return DPLL(clauses, rest, model U {P = true}) or
 		// ...... DPLL(clauses, rest, model U {P = false})
 		return dpll(clauses, rest, model.union(p, true))
@@ -163,8 +163,8 @@ public class DPLLSatisfiable {
 
 	// Note: Override this method if you wish to change the initial variable
 	// ordering.
-	protected List<PropositionSymbol> getPropositionSymbolsInSentence(Sentence s) {
-		List<PropositionSymbol> result = new ArrayList<PropositionSymbol>(
+	protected List<PropositionSymbolImpl> getPropositionSymbolsInSentence(Sentence s) {
+		List<PropositionSymbolImpl> result = new ArrayList<PropositionSymbolImpl>(
 				SymbolCollector.getSymbolsFrom(s));
 
 		return result;
@@ -194,14 +194,14 @@ public class DPLLSatisfiable {
 	 *         a value to be assigned to it, otherwise null if no pure symbol
 	 *         can be identified.
 	 */
-	protected Pair<PropositionSymbol, Boolean> findPureSymbol(
-			List<PropositionSymbol> symbols, Set<Clause> clauses, Model model) {
-		Pair<PropositionSymbol, Boolean> result = null;
+	protected Pair<PropositionSymbolImpl, Boolean> findPureSymbol(
+			List<PropositionSymbolImpl> symbols, Set<Clause> clauses, Model model) {
+		Pair<PropositionSymbolImpl, Boolean> result = null;
 
 		// Collect up possible positive and negative candidate sets of pure
 		// symbols
-		Set<PropositionSymbol> candidatePurePositiveSymbols = new HashSet<PropositionSymbol>();
-		Set<PropositionSymbol> candidatePureNegativeSymbols = new HashSet<PropositionSymbol>();
+		Set<PropositionSymbolImpl> candidatePurePositiveSymbols = new HashSet<PropositionSymbolImpl>();
+		Set<PropositionSymbolImpl> candidatePureNegativeSymbols = new HashSet<PropositionSymbolImpl>();
 		for (Clause c : clauses) {
 			// Algorithm can ignore clauses that are already known to be true
 			if (Boolean.TRUE.equals(model.determineValue(c))) {
@@ -218,7 +218,7 @@ public class DPLLSatisfiable {
 
 		// Determine the overlap/intersection between the positive and negative
 		// candidates
-		Set<PropositionSymbol> nonPureSymbols = SetOps.intersection(
+		Set<PropositionSymbolImpl> nonPureSymbols = SetOps.intersection(
 				candidatePurePositiveSymbols, candidatePureNegativeSymbols);
 
 		// Remove the non-pure symbols
@@ -227,11 +227,11 @@ public class DPLLSatisfiable {
 
 		// We have an implicit preference for positive pure symbols
 		if (candidatePurePositiveSymbols.size() > 0) {
-			result = new Pair<PropositionSymbol, Boolean>(
+			result = new Pair<PropositionSymbolImpl, Boolean>(
 					candidatePurePositiveSymbols.iterator().next(), true);
 		} // We have a negative pure symbol
 		else if (candidatePureNegativeSymbols.size() > 0) {
-			result = new Pair<PropositionSymbol, Boolean>(
+			result = new Pair<PropositionSymbolImpl, Boolean>(
 					candidatePureNegativeSymbols.iterator().next(), false);
 		}
 
@@ -263,9 +263,9 @@ public class DPLLSatisfiable {
 	 *         a value to be assigned to it, otherwise null if no unit clause
 	 *         can be identified.
 	 */
-	protected Pair<PropositionSymbol, Boolean> findUnitClause(
+	protected Pair<PropositionSymbolImpl, Boolean> findUnitClause(
 			Set<Clause> clauses, Model model) {
-		Pair<PropositionSymbol, Boolean> result = null;
+		Pair<PropositionSymbolImpl, Boolean> result = null;
 
 		for (Clause c : clauses) {
 			// if clauses value is currently unknown
@@ -304,7 +304,7 @@ public class DPLLSatisfiable {
 				// are not true under the current model as we were
 				// unable to determine a value.
 				if (unassigned != null) {
-					result = new Pair<PropositionSymbol, Boolean>(
+					result = new Pair<PropositionSymbolImpl, Boolean>(
 							unassigned.getAtomicSentence(),
 							unassigned.isPositiveLiteral());
 					break;
@@ -330,11 +330,11 @@ public class DPLLSatisfiable {
 	}
 
 	// symbols - P
-	protected List<PropositionSymbol> minus(List<PropositionSymbol> symbols,
-			PropositionSymbol p) {
-		List<PropositionSymbol> result = new ArrayList<PropositionSymbol>(
+	protected List<PropositionSymbolImpl> minus(List<PropositionSymbolImpl> symbols,
+			PropositionSymbolImpl p) {
+		List<PropositionSymbolImpl> result = new ArrayList<PropositionSymbolImpl>(
 				symbols.size());
-		for (PropositionSymbol s : symbols) {
+		for (PropositionSymbolImpl s : symbols) {
 			// symbols - P
 			if (!p.equals(s)) {
 				result.add(s);

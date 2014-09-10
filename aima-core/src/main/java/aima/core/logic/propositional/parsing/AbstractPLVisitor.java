@@ -1,8 +1,8 @@
 package aima.core.logic.propositional.parsing;
 
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * Abstract implementation of the PLVisitor interface that provides default
@@ -17,7 +17,7 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 public abstract class AbstractPLVisitor<A> implements PLVisitor<A, Sentence> {
 
 	@Override
-	public Sentence visitPropositionSymbol(PropositionSymbol s, A arg) {
+	public Sentence visitPropositionSymbol(PropositionSymbolImpl s, A arg) {
 		// default behavior is to treat propositional symbols as atomic
 		// and leave unchanged.
 		return s;

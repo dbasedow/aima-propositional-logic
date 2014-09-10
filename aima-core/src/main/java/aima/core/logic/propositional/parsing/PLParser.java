@@ -3,8 +3,6 @@ package aima.core.logic.propositional.parsing;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.lang.model.SourceVersion;
-
 import aima.core.logic.common.Lexer;
 import aima.core.logic.common.LogicTokenTypes;
 import aima.core.logic.common.Parser;
@@ -12,8 +10,8 @@ import aima.core.logic.common.ParserException;
 import aima.core.logic.common.Token;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 7.7, page
@@ -265,14 +263,14 @@ public class PLParser extends Parser<Sentence> {
 	private ParseNode parseTrue() {
 		Token token = lookAhead(1);
 		consume();
-		return new ParseNode(new PropositionSymbol(PropositionSymbol.TRUE_SYMBOL),
+		return new ParseNode(new PropositionSymbolImpl(PropositionSymbolImpl.TRUE_SYMBOL),
 				token);
 	}
 
 	private ParseNode parseFalse() {
 		Token token = lookAhead(1);
 		consume();
-		return new ParseNode(new PropositionSymbol(PropositionSymbol.FALSE_SYMBOL),
+		return new ParseNode(new PropositionSymbolImpl(PropositionSymbolImpl.FALSE_SYMBOL),
 				token);
 	}
 
@@ -280,7 +278,7 @@ public class PLParser extends Parser<Sentence> {
 		Token token = lookAhead(1);
 		String sym = token.getText();
 		consume();
-		return new ParseNode(new PropositionSymbol(sym), token);
+		return new ParseNode(new PropositionSymbolImpl(sym), token);
 	}
 
 	private boolean detectBracket() {

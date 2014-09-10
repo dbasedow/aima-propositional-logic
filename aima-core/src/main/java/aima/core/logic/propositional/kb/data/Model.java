@@ -8,8 +8,8 @@ import java.util.Set;
 import aima.core.logic.propositional.parsing.PLVisitor;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): pages 240, 245.<br>
@@ -27,7 +27,7 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  */
 public class Model implements PLVisitor<Boolean, Boolean> {
 
-	private HashMap<PropositionSymbol, Boolean> assignments = new HashMap<PropositionSymbol, Boolean>();
+	private HashMap<PropositionSymbolImpl, Boolean> assignments = new HashMap<PropositionSymbolImpl, Boolean>();
 
 	/**
 	 * Default Constructor.
@@ -35,23 +35,23 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 	public Model() {
 	}
 
-	public Model(Map<PropositionSymbol, Boolean> values) {
+	public Model(Map<PropositionSymbolImpl, Boolean> values) {
 		assignments.putAll(values);
 	}
 
-	public Boolean getValue(PropositionSymbol symbol) {
+	public Boolean getValue(PropositionSymbolImpl symbol) {
 		return assignments.get(symbol);
 	}
 
-	public boolean isTrue(PropositionSymbol symbol) {
+	public boolean isTrue(PropositionSymbolImpl symbol) {
 		return Boolean.TRUE.equals(assignments.get(symbol));
 	}
 
-	public boolean isFalse(PropositionSymbol symbol) {
+	public boolean isFalse(PropositionSymbolImpl symbol) {
 		return Boolean.FALSE.equals(assignments.get(symbol));
 	}
 
-	public Model union(PropositionSymbol symbol, boolean b) {
+	public Model union(PropositionSymbolImpl symbol, boolean b) {
 		Model m = new Model();
 		m.assignments.putAll(this.assignments);
 		m.assignments.put(symbol, b);
@@ -70,7 +70,7 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 		return null == s.accept(this, null);
 	}
 
-	public Model flip(PropositionSymbol s) {
+	public Model flip(PropositionSymbolImpl s) {
 		if (isTrue(s)) {
 			return union(s, false);
 		}
@@ -80,7 +80,7 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 		return this;
 	}
 
-	public Set<PropositionSymbol> getAssignedSymbols() {
+	public Set<PropositionSymbolImpl> getAssignedSymbols() {
 		return Collections.unmodifiableSet(assignments.keySet());
 	}
 
@@ -121,9 +121,9 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 									// assignments.
 			result = Boolean.FALSE;
 		} else {
-			Set<PropositionSymbol> assignedSymbols = getAssignedSymbols();
+			Set<PropositionSymbolImpl> assignedSymbols = getAssignedSymbols();
 			boolean unassignedSymbols = false;
-			for (PropositionSymbol positive : c.getPositiveSymbols()) {
+			for (PropositionSymbolImpl positive : c.getPositiveSymbols()) {
 				if (assignedSymbols.contains(positive)) {
 					if (isTrue(positive)) {
 						result = Boolean.TRUE;
@@ -135,7 +135,7 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 			}
 			// If truth not determined, continue checking negative symbols
 			if (result == null) {
-				for (PropositionSymbol negative : c.getNegativeSymbols()) {
+				for (PropositionSymbolImpl negative : c.getNegativeSymbols()) {
 					if (assignedSymbols.contains(negative)) {
 						if (isFalse(negative)) {
 							result = Boolean.TRUE;
@@ -162,7 +162,7 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 	}
 
 	public void print() {
-		for (Map.Entry<PropositionSymbol, Boolean> e : assignments.entrySet()) {
+		for (Map.Entry<PropositionSymbolImpl, Boolean> e : assignments.entrySet()) {
 			System.out.print(e.getKey() + " = " + e.getValue() + " ");
 		}
 		System.out.println();
@@ -176,7 +176,7 @@ public class Model implements PLVisitor<Boolean, Boolean> {
 	//
 	// START-PLVisitor
 	@Override
-	public Boolean visitPropositionSymbol(PropositionSymbol s, Boolean arg) {
+	public Boolean visitPropositionSymbol(PropositionSymbolImpl s, Boolean arg) {
 		if (s.isAlwaysTrue()) {
 			return Boolean.TRUE;
 		}

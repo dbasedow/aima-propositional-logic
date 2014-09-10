@@ -1,5 +1,6 @@
 package aima.test.core.unit.logic.propositional.inference;
 
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,7 +8,7 @@ import org.junit.Test;
 import aima.core.logic.propositional.inference.PLFCEntails;
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.parsing.PLParser;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+
 /**
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
@@ -33,7 +34,7 @@ public class PLFCEntailsTest {
 		kb.tell("A & B => L");
 		kb.tell("A");
 		kb.tell("B");
-		PropositionSymbol q = (PropositionSymbol) parser.parse("Q");
+		PropositionSymbolImpl q = (PropositionSymbolImpl) parser.parse("Q");
 		
 		Assert.assertEquals(true, plfce.plfcEntails(kb, q));
 	}
@@ -48,7 +49,7 @@ public class PLFCEntailsTest {
 		kb.tell("A & B => L");
 		kb.tell("A");
 		kb.tell("B");
-		PropositionSymbol q = (PropositionSymbol) parser.parse("Q");
+		PropositionSymbolImpl q = (PropositionSymbolImpl) parser.parse("Q");
 		
 		Assert.assertEquals(true, plfce.plfcEntails(kb, q));
 	}

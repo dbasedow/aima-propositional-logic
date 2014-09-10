@@ -5,7 +5,7 @@ import java.util.List;
 
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Model;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.SymbolCollector;
 import aima.core.util.Util;
@@ -61,7 +61,7 @@ public class TTEntails {
 	 */
 	public boolean ttEntails(KnowledgeBase kb, Sentence alpha) {
 		// symbols <- a list of proposition symbols in KB and &alpha
-		List<PropositionSymbol> symbols = new ArrayList<PropositionSymbol>(
+		List<PropositionSymbolImpl> symbols = new ArrayList<PropositionSymbolImpl>(
 				SymbolCollector.getSymbolsFrom(kb.asSentence(), alpha));
 
 		// return TT-CHECK-ALL(KB, &alpha; symbols, {})
@@ -85,7 +85,7 @@ public class TTEntails {
 	 * @return true if KB entails &alpha;, false otherwise.
 	 */
 	public boolean ttCheckAll(KnowledgeBase kb, Sentence alpha,
-			List<PropositionSymbol> symbols, Model model) {
+			List<PropositionSymbolImpl> symbols, Model model) {
 		// if EMPTY?(symbols) then
 		if (symbols.isEmpty()) {
 			// if PL-TRUE?(KB, model) then return PL-TRUE?(&alpha;, model)
@@ -99,9 +99,9 @@ public class TTEntails {
 
 		// else do
 		// P <- FIRST(symbols)
-		PropositionSymbol p = Util.first(symbols);
+		PropositionSymbolImpl p = Util.first(symbols);
 		// rest <- REST(symbols)
-		List<PropositionSymbol> rest = Util.rest(symbols);
+		List<PropositionSymbolImpl> rest = Util.rest(symbols);
 		// return (TT-CHECK-ALL(KB, &alpha;, rest, model &cup; { P = true })
 		// and
 		// TT-CHECK-ALL(KB, &alpha;, rest, model U { P = false }))

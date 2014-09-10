@@ -1,7 +1,7 @@
 package aima.core.logic.propositional.parsing;
 
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 
 /**
  * <b>Propositional Logic Visitor:</b> A <a
@@ -31,7 +31,7 @@ public interface PLVisitor<A, R> {
 	 *            optional argument to be used by the visitor.
 	 * @return optional return value to be used by the visitor.
 	 */
-	R visitPropositionSymbol(PropositionSymbol sentence, A arg);
+	R visitPropositionSymbol(PropositionSymbolImpl sentence, A arg);
 
 	/**
 	 * Visit a unary complex sentence (e.g. ~A).

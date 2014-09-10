@@ -1,6 +1,6 @@
 package aima.core.logic.propositional.kb.data;
 
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import aima.core.logic.propositional.parsing.ast.Connective;
 
 /**
@@ -15,7 +15,7 @@ import aima.core.logic.propositional.parsing.ast.Connective;
  * 
  */
 public class Literal {
-	private PropositionSymbol atom = null;
+	private PropositionSymbolImpl atom = null;
 	private boolean positive = true; // Assume positive by default.
 	//
 	private String cachedStringRep = null;
@@ -27,7 +27,7 @@ public class Literal {
 	 * @param atom
 	 *            the atomic sentence comprising the literal.
 	 */
-	public Literal(PropositionSymbol atom) {
+	public Literal(PropositionSymbolImpl atom) {
 		this(atom, true);
 	}
 
@@ -40,7 +40,7 @@ public class Literal {
 	 *            true if to be a positive literal, false to be a negative
 	 *            literal.
 	 */
-	public Literal(PropositionSymbol atom, boolean positive) {
+	public Literal(PropositionSymbolImpl atom, boolean positive) {
 		this.atom = atom;
 		this.positive = positive;
 	}
@@ -65,7 +65,7 @@ public class Literal {
 	 * 
 	 * @return the atomic sentence comprising the literal.
 	 */
-	public PropositionSymbol getAtomicSentence() {
+	public PropositionSymbolImpl getAtomicSentence() {
 		return atom;
 	}
 

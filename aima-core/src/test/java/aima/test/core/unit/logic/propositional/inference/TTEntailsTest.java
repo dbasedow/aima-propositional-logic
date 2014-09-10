@@ -1,5 +1,6 @@
 package aima.test.core.unit.logic.propositional.inference;
 
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +9,6 @@ import aima.core.logic.propositional.inference.TTEntails;
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Model;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * @author Ravi Mohan
@@ -118,13 +118,13 @@ public class TTEntailsTest {
 		kb.tell("B21");
 
 		Model model = new Model();
-		model = model.union(new PropositionSymbol("B11"), false);
-		model = model.union(new PropositionSymbol("B21"), true);
-		model = model.union(new PropositionSymbol("P11"), false);
-		model = model.union(new PropositionSymbol("P12"), false);
-		model = model.union(new PropositionSymbol("P21"), false);
-		model = model.union(new PropositionSymbol("P22"), false);
-		model = model.union(new PropositionSymbol("P31"), true);
+		model = model.union(new PropositionSymbolImpl("B11"), false);
+		model = model.union(new PropositionSymbolImpl("B21"), true);
+		model = model.union(new PropositionSymbolImpl("P11"), false);
+		model = model.union(new PropositionSymbolImpl("P12"), false);
+		model = model.union(new PropositionSymbolImpl("P21"), false);
+		model = model.union(new PropositionSymbolImpl("P22"), false);
+		model = model.union(new PropositionSymbolImpl("P31"), true);
 
 		Sentence kbs = kb.asSentence();
 		Assert.assertEquals(true, model.isTrue(kbs));

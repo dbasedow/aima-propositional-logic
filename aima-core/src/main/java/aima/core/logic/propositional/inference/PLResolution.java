@@ -11,7 +11,7 @@ import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.kb.data.Literal;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.util.SetOps;
@@ -193,10 +193,10 @@ public class PLResolution {
 			Set<Clause> resolvents) {
 		// Calculate the complementary positive literals from c1 with
 		// the negative literals from c2
-		Set<PropositionSymbol> complementary = SetOps.intersection(
+		Set<PropositionSymbolImpl> complementary = SetOps.intersection(
 				c1.getPositiveSymbols(), c2.getNegativeSymbols());
 		// Construct a resolvent clause for each complement found
-		for (PropositionSymbol complement : complementary) {
+		for (PropositionSymbolImpl complement : complementary) {
 			List<Literal> resolventLiterals = new ArrayList<Literal>();
 			// Retrieve the literals from c1 that are not the complement
 			for (Literal c1l : c1.getLiterals()) {

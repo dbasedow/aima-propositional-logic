@@ -131,7 +131,7 @@ public abstract class Sentence implements ParseTreeNode {
 	public <A, R> R accept(PLVisitor<A, R> plv, A arg) {
 		R result = null;
 		if (isPropositionSymbol()) {
-			result = plv.visitPropositionSymbol((PropositionSymbol) this, arg);
+			result = plv.visitPropositionSymbol((PropositionSymbolImpl) this, arg);
 		} else if (isUnarySentence()) {
 			result = plv.visitUnarySentence((ComplexSentence) this, arg);
 		} else if (isBinarySentence()) {

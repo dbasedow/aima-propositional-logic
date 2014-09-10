@@ -1,10 +1,10 @@
 package aima.test.core.unit.logic.propositional.kb.data;
 
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import org.junit.Assert;
 import org.junit.Test;
 
 import aima.core.logic.propositional.kb.data.Literal;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * 
@@ -12,8 +12,8 @@ import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
  *
  */
 public class LiteralTest {
-	private final PropositionSymbol SYMBOL_P = new PropositionSymbol("P");
-	private final PropositionSymbol SYMBOL_Q = new PropositionSymbol("Q");
+	private final PropositionSymbolImpl SYMBOL_P = new PropositionSymbolImpl("P");
+	private final PropositionSymbolImpl SYMBOL_Q = new PropositionSymbolImpl("Q");
 
 	@Test
 	public void testIsPositiveLiteral() {
@@ -50,16 +50,16 @@ public class LiteralTest {
 		Literal literal = new Literal(SYMBOL_P);
 		Assert.assertFalse(literal.isAlwaysTrue());
 		
-		literal = new Literal(PropositionSymbol.TRUE);
+		literal = new Literal(PropositionSymbolImpl.TRUE);
 		Assert.assertTrue(literal.isAlwaysTrue());
 		
-		literal = new Literal(PropositionSymbol.TRUE, false);
+		literal = new Literal(PropositionSymbolImpl.TRUE, false);
 		Assert.assertFalse(literal.isAlwaysTrue());
 		
-		literal = new Literal(PropositionSymbol.FALSE);
+		literal = new Literal(PropositionSymbolImpl.FALSE);
 		Assert.assertFalse(literal.isAlwaysTrue());
 		
-		literal = new Literal(PropositionSymbol.FALSE, false);
+		literal = new Literal(PropositionSymbolImpl.FALSE, false);
 		Assert.assertTrue(literal.isAlwaysTrue());
 	}
 	
@@ -68,16 +68,16 @@ public class LiteralTest {
 		Literal literal = new Literal(SYMBOL_P);
 		Assert.assertFalse(literal.isAlwaysFalse());
 		
-		literal = new Literal(PropositionSymbol.TRUE);
+		literal = new Literal(PropositionSymbolImpl.TRUE);
 		Assert.assertFalse(literal.isAlwaysFalse());
 		
-		literal = new Literal(PropositionSymbol.TRUE, false);
+		literal = new Literal(PropositionSymbolImpl.TRUE, false);
 		Assert.assertTrue(literal.isAlwaysFalse());
 		
-		literal = new Literal(PropositionSymbol.FALSE);
+		literal = new Literal(PropositionSymbolImpl.FALSE);
 		Assert.assertTrue(literal.isAlwaysFalse());
 		
-		literal = new Literal(PropositionSymbol.FALSE, false);
+		literal = new Literal(PropositionSymbolImpl.FALSE, false);
 		Assert.assertFalse(literal.isAlwaysFalse());
 	}
 	

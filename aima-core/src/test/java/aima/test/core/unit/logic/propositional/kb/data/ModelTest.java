@@ -1,5 +1,6 @@
 package aima.test.core.unit.logic.propositional.kb.data;
 
+import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,7 +8,6 @@ import org.junit.Test;
 import aima.core.logic.propositional.kb.data.Model;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.Sentence;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 
 /**
  * @author Ravi Mohan
@@ -35,15 +35,15 @@ public class ModelTest {
 
 	@Test
 	public void testEmptyModel() {
-		Assert.assertEquals(null, m.getValue(new PropositionSymbol("P")));
-		Assert.assertEquals(true, m.isUnknown(new PropositionSymbol("P")));
+		Assert.assertEquals(null, m.getValue(new PropositionSymbolImpl("P")));
+		Assert.assertEquals(true, m.isUnknown(new PropositionSymbolImpl("P")));
 	}
 
 	@Test
 	public void testExtendModel() {
 		String p = "P";
-		m = m.union(new PropositionSymbol(p), true);
-		Assert.assertEquals(Boolean.TRUE, m.getValue(new PropositionSymbol("P")));
+		m = m.union(new PropositionSymbolImpl(p), true);
+		Assert.assertEquals(Boolean.TRUE, m.getValue(new PropositionSymbolImpl("P")));
 	}
 
 	@Test
@@ -58,8 +58,8 @@ public class ModelTest {
 	public void testSentenceStatusWhenPTrueAndQTrue() {
 		String p = "P";
 		String q = "Q";
-		m = m.union(new PropositionSymbol(p), true);
-		m = m.union(new PropositionSymbol(q), true);
+		m = m.union(new PropositionSymbolImpl(p), true);
+		m = m.union(new PropositionSymbolImpl(q), true);
 		Assert.assertEquals(true, m.isTrue(andSentence));
 		Assert.assertEquals(true, m.isTrue(orSentence));
 		Assert.assertEquals(true, m.isTrue(impliedSentence));
@@ -70,8 +70,8 @@ public class ModelTest {
 	public void testSentenceStatusWhenPFalseAndQFalse() {
 		String p = "P";
 		String q = "Q";
-		m = m.union(new PropositionSymbol(p), false);
-		m = m.union(new PropositionSymbol(q), false);
+		m = m.union(new PropositionSymbolImpl(p), false);
+		m = m.union(new PropositionSymbolImpl(q), false);
 		Assert.assertEquals(true, m.isFalse(andSentence));
 		Assert.assertEquals(true, m.isFalse(orSentence));
 		Assert.assertEquals(true, m.isTrue(impliedSentence));
@@ -82,8 +82,8 @@ public class ModelTest {
 	public void testSentenceStatusWhenPTrueAndQFalse() {
 		String p = "P";
 		String q = "Q";
-		m = m.union(new PropositionSymbol(p), true);
-		m = m.union(new PropositionSymbol(q), false);
+		m = m.union(new PropositionSymbolImpl(p), true);
+		m = m.union(new PropositionSymbolImpl(q), false);
 		Assert.assertEquals(true, m.isFalse(andSentence));
 		Assert.assertEquals(true, m.isTrue(orSentence));
 		Assert.assertEquals(true, m.isFalse(impliedSentence));
@@ -94,8 +94,8 @@ public class ModelTest {
 	public void testSentenceStatusWhenPFalseAndQTrue() {
 		String p = "P";
 		String q = "Q";
-		m = m.union(new PropositionSymbol(p), false);
-		m = m.union(new PropositionSymbol(q), true);
+		m = m.union(new PropositionSymbolImpl(p), false);
+		m = m.union(new PropositionSymbolImpl(q), true);
 		Assert.assertEquals(true, m.isFalse(andSentence));
 		Assert.assertEquals(true, m.isTrue(orSentence));
 		Assert.assertEquals(true, m.isTrue(impliedSentence));
@@ -106,8 +106,8 @@ public class ModelTest {
 	public void testComplexSentence() {
 		String p = "P";
 		String q = "Q";
-		m = m.union(new PropositionSymbol(p), true);
-		m = m.union(new PropositionSymbol(q), false);
+		m = m.union(new PropositionSymbolImpl(p), true);
+		m = m.union(new PropositionSymbolImpl(q), false);
 		Sentence sent = (Sentence) parser.parse("((P | Q) &  (P => Q))");
 		Assert.assertFalse(m.isTrue(sent));
 		Assert.assertTrue(m.isFalse(sent));
