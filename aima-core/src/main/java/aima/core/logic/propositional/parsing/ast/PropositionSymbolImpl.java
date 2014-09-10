@@ -14,13 +14,13 @@ import javax.lang.model.SourceVersion;
  * 'We use symbols that start with an upper case letter and may contain other
  * letters or subscripts'. In this implementation we allow any legal java
  * identifier to stand in for a proposition symbol.
- * 
+ *
  * @author Ciaran O'Reilly
  * @author Ravi Mohan
- * 
+ *
  * @see javax.lang.model.SourceVersion#isIdentifier(CharSequence)
  */
-public class PropositionSymbolImpl extends AtomicSentence {
+public class PropositionSymbolImpl extends AtomicSentence implements PropositionSymbol {
 	//
 	public static final String TRUE_SYMBOL = "True";
 	public static final String FALSE_SYMBOL = "False";
@@ -31,7 +31,7 @@ public class PropositionSymbolImpl extends AtomicSentence {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param symbol
 	 *            the symbol uniquely identifying the proposition.
 	 */
@@ -51,16 +51,17 @@ public class PropositionSymbolImpl extends AtomicSentence {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return true if this is the always 'True' proposition symbol, false
 	 *         otherwise.
 	 */
+    @Override
 	public boolean isAlwaysTrue() {
 		return TRUE_SYMBOL.equals(symbol);
 	}
 
 	/**
-	 * 
+	 *
 	 * @return true if the symbol passed in is the always 'True' proposition
 	 *         symbol, false otherwise.
 	 */
@@ -69,16 +70,17 @@ public class PropositionSymbolImpl extends AtomicSentence {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return true if this is the always 'False' proposition symbol, false
 	 *         other.
 	 */
+    @Override
 	public boolean isAlwaysFalse() {
 		return FALSE_SYMBOL.equals(symbol);
 	}
 
 	/**
-	 * 
+	 *
 	 * @return true if the symbol passed in is the always 'False' proposition
 	 *         symbol, false other.
 	 */
@@ -88,7 +90,7 @@ public class PropositionSymbolImpl extends AtomicSentence {
 
 	/**
 	 * Determine if the given symbol is a legal proposition symbol.
-	 * 
+	 *
 	 * @param symbol
 	 *            a symbol to be tested.
 	 * @return true if the given symbol is a legal proposition symbol, false
@@ -101,7 +103,7 @@ public class PropositionSymbolImpl extends AtomicSentence {
 	/**
 	 * Determine if the given character can be at the beginning of a proposition
 	 * symbol.
-	 * 
+	 *
 	 * @param ch
 	 *            a character.
 	 * @return true if the given character can be at the beginning of a
@@ -113,7 +115,7 @@ public class PropositionSymbolImpl extends AtomicSentence {
 
 	/**
 	 * Determine if the given character is part of a proposition symbol.
-	 * 
+	 *
 	 * @param ch
 	 *            a character.
 	 * @return true if the given character is part of a proposition symbols
@@ -124,9 +126,10 @@ public class PropositionSymbolImpl extends AtomicSentence {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the symbol uniquely identifying the proposition.
 	 */
+    @Override
 	public String getSymbol() {
 		return symbol;
 	}
