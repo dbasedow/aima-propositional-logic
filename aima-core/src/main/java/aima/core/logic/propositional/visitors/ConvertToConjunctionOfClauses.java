@@ -6,6 +6,7 @@ import java.util.List;
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.kb.data.ConjunctionOfClauses;
 import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.propositional.parsing.ast.SentenceImpl;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 253.<br>
@@ -47,7 +48,7 @@ public class ConvertToConjunctionOfClauses {
 
 		Sentence cnfSentence = ConvertToCNF.convert(s);
 		
-		List<Clause> clauses = new ArrayList<Clause>();
+		List<Clause> clauses = new ArrayList<>();
 		clauses.addAll(ClauseCollector.getClausesFrom(cnfSentence));
 		
 		result = new ConjunctionOfClauses(clauses);

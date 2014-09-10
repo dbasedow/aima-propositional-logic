@@ -11,7 +11,7 @@ import aima.core.logic.common.Token;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
-import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.propositional.parsing.ast.SentenceImpl;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 7.7, page
@@ -56,7 +56,7 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
  * 
  * @see javax.lang.model.SourceVersion#isIdentifier(CharSequence)
  */
-public class PLParser extends Parser<Sentence> {
+public class PLParser extends Parser<SentenceImpl> {
 
 	private PLLexer lexer = new PLLexer();
 
@@ -75,12 +75,12 @@ public class PLParser extends Parser<Sentence> {
 	// PROTECTED
 	//
 	@Override
-	protected Sentence parse() {
-		Sentence result = null;
+	protected SentenceImpl parse() {
+		SentenceImpl result = null;
 
 		ParseNode root = parseSentence(0);
-		if (root != null && root.node instanceof Sentence) {
-			result = (Sentence) root.node;
+		if (root != null && root.node instanceof SentenceImpl) {
+			result = (SentenceImpl) root.node;
 		}
 
 		return result;
@@ -110,7 +110,7 @@ public class PLParser extends Parser<Sentence> {
 		// At this point there should just be the root formula
 		// for this level.
 		if (levelParseNodes.size() == 1
-				&& levelParseNodes.get(0).node instanceof Sentence) {
+				&& levelParseNodes.get(0).node instanceof SentenceImpl) {
 			result = levelParseNodes.get(0);
 		} else {
 			// Did not identify a root sentence for this level,
@@ -135,11 +135,11 @@ public class PLParser extends Parser<Sentence> {
 				if (tokenConnective == Connective.NOT) {
 					// A unary connective
 					if (i + 1 < parseNodes.size()
-							&& parseNodes.get(i + 1).node instanceof Sentence) {
+							&& parseNodes.get(i + 1).node instanceof SentenceImpl) {
 						if (tokenConnective == connectiveToConstruct) {
 							ComplexSentence newSentence = new ComplexSentence(
 									connectiveToConstruct,
-									(Sentence) parseNodes.get(i + 1).node);
+									(SentenceImpl) parseNodes.get(i + 1).node);
 							parseNodes.set(i, new ParseNode(newSentence,
 									parseNode.token));
 							parseNodes.set(i + 1, null);
@@ -154,15 +154,15 @@ public class PLParser extends Parser<Sentence> {
 					}
 				} else {
 					// A Binary connective
-					if ((i - 1 >= 0 && parseNodes.get(i - 1).node instanceof Sentence)
+					if ((i - 1 >= 0 && parseNodes.get(i - 1).node instanceof SentenceImpl)
 							&& (i + 1 < parseNodes.size() && parseNodes
-									.get(i + 1).node instanceof Sentence)) {
+									.get(i + 1).node instanceof SentenceImpl)) {
 						// A binary connective
 						if (tokenConnective == connectiveToConstruct) {
 							ComplexSentence newSentence = new ComplexSentence(
 									connectiveToConstruct,
-									(Sentence) parseNodes.get(i - 1).node,
-									(Sentence) parseNodes.get(i + 1).node);
+									(SentenceImpl) parseNodes.get(i - 1).node,
+									(SentenceImpl) parseNodes.get(i + 1).node);
 							parseNodes.set(i - 1, new ParseNode(newSentence,
 									parseNode.token));
 							parseNodes.set(i, null);

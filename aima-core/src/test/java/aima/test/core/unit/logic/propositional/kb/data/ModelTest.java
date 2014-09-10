@@ -1,13 +1,13 @@
 package aima.test.core.unit.logic.propositional.kb.data;
 
 import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
+import aima.core.logic.propositional.parsing.ast.SentenceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.logic.propositional.kb.data.Model;
 import aima.core.logic.propositional.parsing.PLParser;
-import aima.core.logic.propositional.parsing.ast.Sentence;
 
 /**
  * @author Ravi Mohan
@@ -18,18 +18,18 @@ public class ModelTest {
 
 	private PLParser parser;
 
-	Sentence trueSentence, falseSentence, andSentence, orSentence,
+	SentenceImpl trueSentence, falseSentence, andSentence, orSentence,
 			impliedSentence, biConditionalSentence;
 
 	@Before
 	public void setUp() {
 		parser = new PLParser();
-		trueSentence = (Sentence) parser.parse("true");
-		falseSentence = (Sentence) parser.parse("false");
-		andSentence = (Sentence) parser.parse("(P  &  Q)");
-		orSentence = (Sentence) parser.parse("(P  |  Q)");
-		impliedSentence = (Sentence) parser.parse("(P  =>  Q)");
-		biConditionalSentence = (Sentence) parser.parse("(P  <=>  Q)");
+		trueSentence = (SentenceImpl) parser.parse("true");
+		falseSentence = (SentenceImpl) parser.parse("false");
+		andSentence = (SentenceImpl) parser.parse("(P  &  Q)");
+		orSentence = (SentenceImpl) parser.parse("(P  |  Q)");
+		impliedSentence = (SentenceImpl) parser.parse("(P  =>  Q)");
+		biConditionalSentence = (SentenceImpl) parser.parse("(P  <=>  Q)");
 		m = new Model();
 	}
 
@@ -108,10 +108,10 @@ public class ModelTest {
 		String q = "Q";
 		m = m.union(new PropositionSymbolImpl(p), true);
 		m = m.union(new PropositionSymbolImpl(q), false);
-		Sentence sent = (Sentence) parser.parse("((P | Q) &  (P => Q))");
+		SentenceImpl sent = (SentenceImpl) parser.parse("((P | Q) &  (P => Q))");
 		Assert.assertFalse(m.isTrue(sent));
 		Assert.assertTrue(m.isFalse(sent));
-		Sentence sent2 = (Sentence) parser.parse("((P | Q) & (Q))");
+		SentenceImpl sent2 = (SentenceImpl) parser.parse("((P | Q) & (Q))");
 		Assert.assertFalse(m.isTrue(sent2));
 		Assert.assertTrue(m.isFalse(sent2));
 	}

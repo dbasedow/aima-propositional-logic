@@ -9,7 +9,7 @@ package aima.core.logic.propositional.parsing.ast;
  * @author Ciaran O'Reilly
  * @author Ravi Mohan 
  */
-public class ComplexSentence extends Sentence {
+public class ComplexSentence extends SentenceImpl {
 
 	private Connective connective;
 	private Sentence[] simplerSentences;

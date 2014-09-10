@@ -1,6 +1,7 @@
 package aima.core.logic.propositional.visitors;
 
 import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.propositional.parsing.ast.SentenceImpl;
 
 /**
  * Convert a Sentence into an equivalent Negation Normal Form (NNF) Sentence. A

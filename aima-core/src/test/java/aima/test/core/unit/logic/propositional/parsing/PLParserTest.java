@@ -1,5 +1,6 @@
 package aima.test.core.unit.logic.propositional.parsing;
 
+import aima.core.logic.propositional.parsing.ast.SentenceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +9,6 @@ import aima.core.logic.common.LexerException;
 import aima.core.logic.common.LogicTokenTypes;
 import aima.core.logic.common.ParserException;
 import aima.core.logic.propositional.parsing.PLParser;
-import aima.core.logic.propositional.parsing.ast.Sentence;
 
 /**
  * @author Ravi Mohan
@@ -16,7 +16,7 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
  */
 public class PLParserTest {
 	private PLParser parser   = null;
-	private Sentence sentence = null;
+	private SentenceImpl sentence = null;
 	private String   expected = null;
 
 	@Before
@@ -202,7 +202,7 @@ public class PLParserTest {
 	}
 	
 	private String prettyPrintF(String prettyPrintedFormula) {
-		Sentence s = parser.parse(prettyPrintedFormula);
+		SentenceImpl s = parser.parse(prettyPrintedFormula);
 		
 		Assert.assertEquals("The pretty print formula should parse and print the same.", prettyPrintedFormula, ""+s);
 		

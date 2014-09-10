@@ -4,7 +4,7 @@ import aima.core.agent.Action;
 import aima.core.agent.Percept;
 import aima.core.agent.impl.AbstractAgent;
 import aima.core.logic.propositional.kb.KnowledgeBase;
-import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.propositional.parsing.ast.SentenceImpl;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 7.1, page
@@ -68,7 +68,7 @@ public abstract class KBAgent extends AbstractAgent {
 	 *         at the given time.
 	 */
 	// MAKE-PERCEPT-SENTENCE(percept, t)
-	public abstract Sentence makePerceptSentence(Percept percept, int t);
+	public abstract SentenceImpl makePerceptSentence(Percept percept, int t);
 
 	/**
 	 * MAKE-ACTION-QUERY constructs a sentence that asks what action should be
@@ -80,7 +80,7 @@ public abstract class KBAgent extends AbstractAgent {
 	 *         time.
 	 */
 	// MAKE-ACTION-QUERY(t)
-	public abstract Sentence makeActionQuery(int t);
+	public abstract SentenceImpl makeActionQuery(int t);
 
 	/**
 	 * MAKE-ACTION-SENTENCE constructs a sentence asserting that the chosen action was executed.
@@ -91,7 +91,7 @@ public abstract class KBAgent extends AbstractAgent {
 	 * @return a sentence asserting that the chosen action was executed.
 	 */
 	// MAKE-ACTION-SENTENCE(action, t)
-	public abstract Sentence makeActionSentence(Action action, int t);
+	public abstract SentenceImpl makeActionSentence(Action action, int t);
 	
 	/**
 	 * A wrapper around the KB's ask() method which translates the action (in the form of
@@ -105,5 +105,5 @@ public abstract class KBAgent extends AbstractAgent {
 	 * @return the Action to be performed in response to the given query.
 	 */
 	// ASK(KB, MAKE-ACTION-QUERY(t))
-	public abstract Action ask(KnowledgeBase KB, Sentence actionQuery);
+	public abstract Action ask(KnowledgeBase KB, SentenceImpl actionQuery);
 }

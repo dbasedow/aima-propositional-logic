@@ -4,6 +4,7 @@ import aima.core.logic.propositional.parsing.AbstractPLVisitor;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.propositional.parsing.ast.SentenceImpl;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 249.<br>

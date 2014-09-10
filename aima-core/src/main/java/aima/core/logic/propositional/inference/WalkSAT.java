@@ -10,6 +10,7 @@ import java.util.Set;
 
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.kb.data.Model;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import aima.core.util.SetOps;
 
@@ -121,15 +122,15 @@ public class WalkSAT {
 	
 	protected Model randomAssignmentToSymbolsInClauses(Set<Clause> clauses) {
 		// Collect the symbols in clauses
-		Set<PropositionSymbolImpl> symbols = new LinkedHashSet<PropositionSymbolImpl>();
+		Set<PropositionSymbol> symbols = new LinkedHashSet<>();
 		for (Clause c : clauses) {
 			symbols.addAll(c.getPositiveSymbols());
 			symbols.addAll(c.getNegativeSymbols());
 		}
 
 		// Make initial set of assignments
-		Map<PropositionSymbolImpl, Boolean> values = new HashMap<PropositionSymbolImpl, Boolean>();
-		for (PropositionSymbolImpl symbol : symbols) {
+		Map<PropositionSymbol, Boolean> values = new HashMap<>();
+		for (PropositionSymbol symbol : symbols) {
 			// a random assignment of true/false to the symbols in clauses
 			values.put(symbol, random.nextBoolean());
 		}
@@ -153,13 +154,13 @@ public class WalkSAT {
 		return result;
 	}
 
-	protected PropositionSymbolImpl randomlySelectSymbolFromClause(Clause clause) {
+	protected PropositionSymbol randomlySelectSymbolFromClause(Clause clause) {
 		// all the symbols in clause
-		Set<PropositionSymbolImpl> symbols = SetOps.union(
+		Set<PropositionSymbol> symbols = SetOps.union(
 				clause.getPositiveSymbols(), clause.getNegativeSymbols());
 
 		// a randomly selected symbol from clause
-		PropositionSymbolImpl result = (new ArrayList<PropositionSymbolImpl>(symbols))
+		PropositionSymbol result = (new ArrayList<>(symbols))
 				.get(random.nextInt(symbols.size()));
 		return result;
 	}
@@ -169,10 +170,10 @@ public class WalkSAT {
 		Model result = model;
 
 		// all the symbols in clause
-		Set<PropositionSymbolImpl> symbols = SetOps.union(
+		Set<PropositionSymbol> symbols = SetOps.union(
 				clause.getPositiveSymbols(), clause.getNegativeSymbols());
 		int maxClausesSatisfied = -1;
-		for (PropositionSymbolImpl symbol : symbols) {
+		for (PropositionSymbol symbol : symbols) {
 			Model flippedModel = result.flip(symbol);
 			int numberClausesSatisfied = 0;
 			for (Clause c : clauses) {

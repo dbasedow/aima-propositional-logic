@@ -1,6 +1,7 @@
 package aima.test.core.unit.logic.propositional.inference;
 
 import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
+import aima.core.logic.propositional.parsing.ast.SentenceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +9,6 @@ import org.junit.Test;
 import aima.core.logic.propositional.inference.TTEntails;
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Model;
-import aima.core.logic.propositional.parsing.ast.Sentence;
 
 /**
  * @author Ravi Mohan
@@ -126,7 +126,7 @@ public class TTEntailsTest {
 		model = model.union(new PropositionSymbolImpl("P22"), false);
 		model = model.union(new PropositionSymbolImpl("P31"), true);
 
-		Sentence kbs = kb.asSentence();
+		SentenceImpl kbs = kb.asSentence();
 		Assert.assertEquals(true, model.isTrue(kbs));
 	}
 }

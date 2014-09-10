@@ -4,6 +4,7 @@ import aima.core.logic.propositional.parsing.AbstractPLVisitor;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
 import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.propositional.parsing.ast.SentenceImpl;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): page 253.<br>
@@ -42,7 +43,7 @@ public class BiconditionalElimination extends AbstractPLVisitor<Object> {
 			Sentence beta = s.getSimplerSentence(1).accept(this, arg);
 			Sentence alphaImpliesBeta = new ComplexSentence(
 					Connective.IMPLICATION, alpha, beta);
-			Sentence betaImpliesAlpha = new ComplexSentence(
+			SentenceImpl betaImpliesAlpha = new ComplexSentence(
 					Connective.IMPLICATION, beta, alpha);
 
 			result = new ComplexSentence(Connective.AND, alphaImpliesBeta,

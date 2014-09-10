@@ -9,10 +9,7 @@ import java.util.Set;
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.kb.data.Literal;
-import aima.core.logic.propositional.parsing.ast.ComplexSentence;
-import aima.core.logic.propositional.parsing.ast.Connective;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
-import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.propositional.parsing.ast.*;
 import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.util.SetOps;
 
@@ -69,7 +66,7 @@ public class PLResolution {
 	 *            the query, a sentence in propositional logic.
 	 * @return true if KB |= &alpha;, false otherwise.
 	 */
-	public boolean plResolution(KnowledgeBase kb, Sentence alpha) {
+	public boolean plResolution(KnowledgeBase kb, SentenceImpl alpha) {
 		// clauses <- the set of clauses in the CNF representation
 		// of KB & ~alpha
 		Set<Clause> clauses = setOfClausesInTheCNFRepresentationOfKBAndNotAlpha(
@@ -174,10 +171,10 @@ public class PLResolution {
 	// PROTECTED
 	//
 	protected Set<Clause> setOfClausesInTheCNFRepresentationOfKBAndNotAlpha(
-			KnowledgeBase kb, Sentence alpha) {
+			KnowledgeBase kb, SentenceImpl alpha) {
 
 		// KB & ~alpha;
-		Sentence isContradiction = new ComplexSentence(Connective.AND,
+		SentenceImpl isContradiction = new ComplexSentence(Connective.AND,
 				kb.asSentence(), new ComplexSentence(Connective.NOT, alpha));
 		// the set of clauses in the CNF representation
 		Set<Clause> clauses = new LinkedHashSet<Clause>(
@@ -193,10 +190,10 @@ public class PLResolution {
 			Set<Clause> resolvents) {
 		// Calculate the complementary positive literals from c1 with
 		// the negative literals from c2
-		Set<PropositionSymbolImpl> complementary = SetOps.intersection(
+		Set<PropositionSymbol> complementary = SetOps.intersection(
 				c1.getPositiveSymbols(), c2.getNegativeSymbols());
 		// Construct a resolvent clause for each complement found
-		for (PropositionSymbolImpl complement : complementary) {
+		for (PropositionSymbol complement : complementary) {
 			List<Literal> resolventLiterals = new ArrayList<Literal>();
 			// Retrieve the literals from c1 that are not the complement
 			for (Literal c1l : c1.getLiterals()) {

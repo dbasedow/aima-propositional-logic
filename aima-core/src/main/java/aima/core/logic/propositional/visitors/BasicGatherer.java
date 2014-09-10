@@ -4,6 +4,7 @@ import java.util.Set;
 
 import aima.core.logic.propositional.parsing.PLVisitor;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
 import aima.core.util.SetOps;
 
@@ -19,7 +20,7 @@ import aima.core.util.SetOps;
 public abstract class BasicGatherer<T> implements PLVisitor<Set<T>, Set<T>> {
 
 	@Override
-	public Set<T> visitPropositionSymbol(PropositionSymbolImpl s, Set<T> arg) {
+	public Set<T> visitPropositionSymbol(PropositionSymbol s, Set<T> arg) {
 		return arg;
 	}
 

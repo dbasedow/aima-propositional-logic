@@ -1,7 +1,7 @@
 package aima.core.logic.propositional.parsing.ast;
 
 
-public interface PropositionSymbol {
+public interface PropositionSymbol extends Sentence {
     public boolean isAlwaysTrue();
 
     public boolean isAlwaysFalse();

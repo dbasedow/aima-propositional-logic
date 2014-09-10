@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
+import aima.core.logic.propositional.parsing.ast.SentenceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +16,6 @@ import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.kb.data.Model;
 import aima.core.logic.propositional.parsing.PLParser;
-import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.logic.propositional.visitors.SymbolCollector;
 
@@ -38,10 +39,10 @@ public class DPLLSatisfiableTest {
 		Model model = new Model();
 		model = model.union(new PropositionSymbolImpl("A"), true).union(
 				new PropositionSymbolImpl("B"), true);
-		Sentence sentence = parser.parse("A & B & (A | B)");
+		SentenceImpl sentence = parser.parse("A & B & (A | B)");
 		Set<Clause> clauses = ConvertToConjunctionOfClauses.convert(sentence)
 				.getClauses();
-		List<PropositionSymbolImpl> symbols = new ArrayList<PropositionSymbolImpl>(
+		List<PropositionSymbol> symbols = new ArrayList<>(
 				SymbolCollector.getSymbolsFrom(sentence));
 
 		boolean satisfiable = dpll.dpll(clauses, symbols, model);
@@ -53,10 +54,10 @@ public class DPLLSatisfiableTest {
 		Model model = new Model();
 		model = model.union(new PropositionSymbolImpl("A"), true).union(
 				new PropositionSymbolImpl("B"), false);
-		Sentence sentence = parser.parse("(A | B) & (A => B)");
+		SentenceImpl sentence = parser.parse("(A | B) & (A => B)");
 		Set<Clause> clauses = ConvertToConjunctionOfClauses.convert(sentence)
 				.getClauses();
-		List<PropositionSymbolImpl> symbols = new ArrayList<PropositionSymbolImpl>(
+		List<PropositionSymbol> symbols = new ArrayList<>(
 				SymbolCollector.getSymbolsFrom(sentence));
 
 		boolean satisfiable = dpll.dpll(clauses, symbols, model);
@@ -65,7 +66,7 @@ public class DPLLSatisfiableTest {
 
 	@Test
 	public void testDPLLSucceedsWithAandNotA() {
-		Sentence sentence = parser.parse("A & ~A");
+		SentenceImpl sentence = parser.parse("A & ~A");
 		boolean satisfiable = dpll.dpllSatisfiable(sentence);
 		Assert.assertEquals(false, satisfiable);
 	}
@@ -89,7 +90,7 @@ public class DPLLSatisfiableTest {
 
 	@Test
 	public void testDPLLSucceedsWithStackOverflowBugReport1() {
-		Sentence sentence = (Sentence) parser.parse("(A | ~A) & (A | B)");
+		SentenceImpl sentence = (SentenceImpl) parser.parse("(A | ~A) & (A | B)");
 		Assert.assertTrue(dpll.dpllSatisfiable(sentence));
 	}
 
@@ -116,10 +117,10 @@ public class DPLLSatisfiableTest {
 		model = model.union(new PropositionSymbolImpl("A"), false)
 				.union(new PropositionSymbolImpl("B"), false)
 				.union(new PropositionSymbolImpl("C"), true);
-		Sentence sentence = parser.parse("((A | B) | C)");
+		SentenceImpl sentence = parser.parse("((A | B) | C)");
 		Set<Clause> clauses = ConvertToConjunctionOfClauses.convert(sentence)
 				.getClauses();
-		List<PropositionSymbolImpl> symbols = new ArrayList<PropositionSymbolImpl>(
+		List<PropositionSymbol> symbols = new ArrayList<>(
 				SymbolCollector.getSymbolsFrom(sentence));
 
 		boolean satisfiable = dpll.dpll(clauses, symbols, model);

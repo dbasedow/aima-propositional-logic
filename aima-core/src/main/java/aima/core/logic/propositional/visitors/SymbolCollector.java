@@ -3,8 +3,9 @@ package aima.core.logic.propositional.visitors;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
+import aima.core.logic.propositional.parsing.ast.PropositionSymbol;
 import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.propositional.parsing.ast.SentenceImpl;
 
 /**
  * Utility class for collecting propositional symbols from sentences. Will
@@ -13,7 +14,7 @@ import aima.core.logic.propositional.parsing.ast.Sentence;
  * @author Ravi Mohan
  * @author Ciaran O'Reilly
  */
-public class SymbolCollector extends BasicGatherer<PropositionSymbolImpl> {
+public class SymbolCollector extends BasicGatherer<PropositionSymbol> {
 
 	/**
 	 * Collect a set of propositional symbols from a list of given sentences.
@@ -23,8 +24,8 @@ public class SymbolCollector extends BasicGatherer<PropositionSymbolImpl> {
 	 * @return a set of all the proposition symbols that are not always true or
 	 *         false contained within the input sentences.
 	 */
-	public static Set<PropositionSymbolImpl> getSymbolsFrom(Sentence... sentences) {
-		Set<PropositionSymbolImpl> result = new LinkedHashSet<PropositionSymbolImpl>();
+	public static Set<PropositionSymbol> getSymbolsFrom(Sentence... sentences) {
+		Set<PropositionSymbol> result = new LinkedHashSet<>();
 
 		SymbolCollector symbolCollector = new SymbolCollector();
 		for (Sentence s : sentences) {
@@ -35,8 +36,8 @@ public class SymbolCollector extends BasicGatherer<PropositionSymbolImpl> {
 	}
 
 	@Override
-	public Set<PropositionSymbolImpl> visitPropositionSymbol(PropositionSymbolImpl s,
-			Set<PropositionSymbolImpl> arg) {
+	public Set<PropositionSymbol> visitPropositionSymbol(PropositionSymbol s,
+			Set<PropositionSymbol> arg) {
 		// Do not add the always true or false symbols
 		if (!s.isAlwaysTrue() && !s.isAlwaysFalse()) {
 			arg.add(s);

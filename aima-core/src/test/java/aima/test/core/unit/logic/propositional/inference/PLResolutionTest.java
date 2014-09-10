@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 
+import aima.core.logic.propositional.parsing.ast.SentenceImpl;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +15,6 @@ import aima.core.logic.propositional.inference.PLResolution;
 import aima.core.logic.propositional.kb.KnowledgeBase;
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.parsing.PLParser;
-import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.ConvertToConjunctionOfClauses;
 import aima.core.util.SetOps;
 
@@ -105,7 +105,7 @@ public class PLResolutionTest {
 	public void testPLResolve1() {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.tell("(B11 => ~P11) & B11");
-		Sentence alpha = parser.parse("P11");
+		SentenceImpl alpha = parser.parse("P11");
 
 		boolean b = resolution.plResolution(kb, alpha);
 		Assert.assertEquals(false, b);
@@ -115,7 +115,7 @@ public class PLResolutionTest {
 	public void testPLResolve2() {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.tell("A & B");
-		Sentence alpha = parser.parse("B");
+		SentenceImpl alpha = parser.parse("B");
 
 		boolean b = resolution.plResolution(kb, alpha);
 		Assert.assertEquals(true, b);
@@ -125,7 +125,7 @@ public class PLResolutionTest {
 	public void testPLResolve3() {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.tell("(B11 => ~P11) & B11");
-		Sentence alpha = parser.parse("~P11");
+		SentenceImpl alpha = parser.parse("~P11");
 
 		boolean b = resolution.plResolution(kb, alpha);
 		Assert.assertEquals(true, b);
@@ -135,7 +135,7 @@ public class PLResolutionTest {
 	public void testPLResolve4() {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.tell("A | B");
-		Sentence alpha = parser.parse("B");
+		SentenceImpl alpha = parser.parse("B");
 
 		boolean b = resolution.plResolution(kb, alpha);
 		Assert.assertEquals(false, b);
@@ -145,7 +145,7 @@ public class PLResolutionTest {
 	public void testPLResolve5() {
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.tell("(B11 => ~P11) & B11");
-		Sentence alpha = parser.parse("~B11");
+		SentenceImpl alpha = parser.parse("~B11");
 
 		boolean b = resolution.plResolution(kb, alpha);
 		Assert.assertEquals(false, b);
@@ -156,7 +156,7 @@ public class PLResolutionTest {
 		KnowledgeBase kb = new KnowledgeBase();
 		// e.g. from AIMA3e pg. 254
 		kb.tell("(B11 <=> P12 | P21) & ~B11");
-		Sentence alpha = parser.parse("~P21");
+		SentenceImpl alpha = parser.parse("~P21");
 
 		boolean b = resolution.plResolution(kb, alpha);
 		Assert.assertEquals(true, b);
@@ -167,7 +167,7 @@ public class PLResolutionTest {
 		// test (and fix) suggested by Huy Dinh. Thanks Huy!
 		KnowledgeBase kb = new KnowledgeBase();
 		kb.tell("(B11 <=> P12 | P21) & ~B11");
-		Sentence alpha = parser.parse("B");
+		SentenceImpl alpha = parser.parse("B");
 
 		boolean b = resolution.plResolution(kb, alpha);
 		Assert.assertEquals(false, b); // false as KB says nothing about B
@@ -185,7 +185,7 @@ public class PLResolutionTest {
 		kb.tell("B10");
 		kb.tell("B01");
 		
-		Sentence alpha = parser.parse("P00");
+		SentenceImpl alpha = parser.parse("P00");
 		boolean b = resolution.plResolution(kb, alpha);
 		Assert.assertEquals(true, b);
 	}
@@ -202,7 +202,7 @@ public class PLResolutionTest {
 		kb.tell("B10");
 		kb.tell("B01");
 		
-		Sentence alpha = parser.parse("P00");
+		SentenceImpl alpha = parser.parse("P00");
 		boolean b = resolution.plResolution(kb, alpha);
 		Assert.assertEquals(true, b);
 	}

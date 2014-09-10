@@ -1,11 +1,12 @@
 package aima.test.core.unit.logic.propositional.visitors;
 
+import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.propositional.parsing.ast.SentenceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import aima.core.logic.propositional.parsing.PLParser;
-import aima.core.logic.propositional.parsing.ast.Sentence;
 import aima.core.logic.propositional.visitors.ConvertToCNF;
 
 /**

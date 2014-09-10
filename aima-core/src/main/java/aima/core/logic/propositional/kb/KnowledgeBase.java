@@ -7,19 +7,19 @@ import aima.core.logic.propositional.inference.TTEntails;
 import aima.core.logic.propositional.parsing.PLParser;
 import aima.core.logic.propositional.parsing.ast.ComplexSentence;
 import aima.core.logic.propositional.parsing.ast.Connective;
-import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.propositional.parsing.ast.SentenceImpl;
 
 /**
  * @author Ravi Mohan
  * @author Mike Stampone
  */
 public class KnowledgeBase {
-	private List<Sentence> sentences;
+	private List<SentenceImpl> sentences;
 
 	private PLParser parser;
 
 	public KnowledgeBase() {
-		sentences = new ArrayList<Sentence>();
+		sentences = new ArrayList<SentenceImpl>();
 		parser = new PLParser();
 	}
 
@@ -30,7 +30,7 @@ public class KnowledgeBase {
 	 *            a fact to be added to the knowledge base.
 	 */
 	public void tell(String aSentence) {
-		tell((Sentence) parser.parse(aSentence));
+		tell((SentenceImpl) parser.parse(aSentence));
 		
 	}
 	
@@ -40,7 +40,7 @@ public class KnowledgeBase {
 	 * @param aSentence
 	 *            a fact to be added to the knowledge base.
 	 */
-	public void tell(Sentence aSentence) {
+	public void tell(SentenceImpl aSentence) {
 		if (!(sentences.contains(aSentence))) {
 			sentences.add(aSentence);
 		}
@@ -76,7 +76,7 @@ public class KnowledgeBase {
 	 * @return the list of sentences in the knowledge base chained together as a
 	 *         single sentence.
 	 */
-	public Sentence asSentence() {
+	public SentenceImpl asSentence() {
 		return chainWith(Connective.AND, sentences);
 	}
 
@@ -93,7 +93,7 @@ public class KnowledgeBase {
 	public boolean askWithTTEntails(String queryString) {
 		PLParser parser = new PLParser();
 
-		Sentence alpha = parser.parse(queryString);
+		SentenceImpl alpha = parser.parse(queryString);
 
 		return new TTEntails().ttEntails(this, alpha);
 	}
@@ -112,12 +112,12 @@ public class KnowledgeBase {
 	 * 
 	 * @return the list of sentences in the knowledge base.
 	 */
-	public List<Sentence> getSentences() {
+	public List<SentenceImpl> getSentences() {
 		return sentences;
 	}
 
-	public static Sentence chainWith(Connective connective,
-			List<Sentence> sentences) {
+	public static SentenceImpl chainWith(Connective connective,
+			List<SentenceImpl> sentences) {
 		if (sentences.size() == 0) {
 			return null;
 		} else if (sentences.size() == 1) {
@@ -125,9 +125,9 @@ public class KnowledgeBase {
 		} else {
 			// Chaining is done righ associative,
 			// in the same way parsing works.
-			Sentence soFar = sentences.get(sentences.size() - 1);
+			SentenceImpl soFar = sentences.get(sentences.size() - 1);
 			for (int i = sentences.size() - 2; i >= 0; i--) {
-				Sentence next = sentences.get(i);
+				SentenceImpl next = sentences.get(i);
 				soFar = new ComplexSentence(connective, next, soFar);
 			}
 			return soFar;

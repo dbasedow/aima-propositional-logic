@@ -7,9 +7,7 @@ import java.util.Set;
 
 import aima.core.logic.propositional.kb.data.Clause;
 import aima.core.logic.propositional.kb.data.Literal;
-import aima.core.logic.propositional.parsing.ast.ComplexSentence;
-import aima.core.logic.propositional.parsing.ast.PropositionSymbolImpl;
-import aima.core.logic.propositional.parsing.ast.Sentence;
+import aima.core.logic.propositional.parsing.ast.*;
 
 /**
  * Utility class for collecting clauses from CNF Sentences.
@@ -32,7 +30,7 @@ public class ClauseCollector extends BasicGatherer<Clause> {
 		Set<Clause> result = new LinkedHashSet<Clause>();
 
 		ClauseCollector clauseCollector = new ClauseCollector();
-		for (Sentence cnfSentence : cnfSentences) {			
+		for (Sentence cnfSentence : cnfSentences) {
 			result = cnfSentence.accept(clauseCollector, result);
 		}	
 
@@ -40,7 +38,7 @@ public class ClauseCollector extends BasicGatherer<Clause> {
 	}
 	
 	@Override
-	public Set<Clause> visitPropositionSymbol(PropositionSymbolImpl s, Set<Clause> arg) {
+	public Set<Clause> visitPropositionSymbol(PropositionSymbol s, Set<Clause> arg) {
 		// a positive unit clause
 		Literal positiveLiteral = new Literal(s);
 		arg.add(new Clause(positiveLiteral));
@@ -56,7 +54,7 @@ public class ClauseCollector extends BasicGatherer<Clause> {
 		}
 		
 		// a negative unit clause
-		Literal negativeLiteral = new Literal((PropositionSymbolImpl)s.getSimplerSentence(0), false);
+		Literal negativeLiteral = new Literal((PropositionSymbol)s.getSimplerSentence(0), false);
 		arg.add(new Clause(negativeLiteral));
 		
 		return arg;
@@ -69,7 +67,7 @@ public class ClauseCollector extends BasicGatherer<Clause> {
 			s.getSimplerSentence(0).accept(this, arg);
 			s.getSimplerSentence(1).accept(this, arg);			
 		} else if (s.isOrSentence()) {
-			List<Literal> literals = new ArrayList<Literal>(LiteralCollector.getLiterals(s));
+			List<Literal> literals = new ArrayList<>(LiteralCollector.getLiterals(s));
 			arg.add(new Clause(literals));			
 		} else {
 			throw new IllegalArgumentException("Sentence is not in CNF: "+s);
@@ -84,7 +82,7 @@ public class ClauseCollector extends BasicGatherer<Clause> {
 	private static class LiteralCollector extends BasicGatherer<Literal> {
 		
 		private static Set<Literal> getLiterals(Sentence disjunctiveSentence) {
-			Set<Literal> result = new LinkedHashSet<Literal>();
+			Set<Literal> result = new LinkedHashSet<>();
 			
 			LiteralCollector literalCollector = new LiteralCollector();
 			result = disjunctiveSentence.accept(literalCollector, result);
@@ -93,7 +91,7 @@ public class ClauseCollector extends BasicGatherer<Clause> {
 		}
 		
 		@Override
-		public Set<Literal> visitPropositionSymbol(PropositionSymbolImpl s, Set<Literal> arg) {
+		public Set<Literal> visitPropositionSymbol(PropositionSymbol s, Set<Literal> arg) {
 			// a positive literal
 			Literal positiveLiteral = new Literal(s);
 			arg.add(positiveLiteral);
@@ -109,7 +107,7 @@ public class ClauseCollector extends BasicGatherer<Clause> {
 			}
 			
 			// a negative literal
-			Literal negativeLiteral = new Literal((PropositionSymbolImpl)s.getSimplerSentence(0), false);
+			Literal negativeLiteral = new Literal((PropositionSymbol)s.getSimplerSentence(0), false);
 
 			arg.add(negativeLiteral);
 			
